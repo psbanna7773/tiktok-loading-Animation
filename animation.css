@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: grey;
+    display: grid;
+    place-content: center;
+    height: 100vh;
+}
+/* ======================== */
+/*
+    These are general styles about the size of the element. You can adjust the size if you want.
+    Keep in mind that if you do change the size you will have to adjust the left position inside of the keyframe.
+    In I suggest doing 5px less than your element size for the left position. For example, here the width is 100px so I use
+    a left position of 95px.
+*/
+.loader{
+    width: 100px;
+    height: 100px;
+    position: relative; /*This will make the element inside of it that has position of absolute stay inside of this box.*/
+}
+/*Selecting both pseudo-elements together because they will have the following styles in common. Doing it this way we don't have to repeat ourselves later.*/
+.loader::before,
+.loader::after{
+    content: '';
+    position: absolute;
+    width: inherit; /*Gets the same width as the parent (.loader).*/
+    height: inherit; /*Gets the same height as the parent (.loader).*/
+    border-radius: 50%;
+    mix-blend-mode: multiply; /*Mixes the colors so that you get the layer effect.*/
+    animation: rotate 1s infinite
+    cubic-bezier(0.77, 0, 0.175, 1); /*The animation will take 1 second and it will run for an infinite time.*/
+}
+/*Selecting the pseudo-elements individually to apply different colors and a delay on the ::after.*/
+.loader::before{
+    background-color: #fc3f9e;
+}
+.loader::after{
+    background-color: #50e8f3;
+    animation-delay: .5s; /*The delay here is important. Make sure that the delay is half of your animation duration (1 second in this case) so we do a delay of .5 second.
+    If the delay is not half of the animation duration, the animation will not look fluid.*/
+}
+@keyframes rotate {
+    0%,100%{
+        left: 95px; /*The 0% and 100% (start and end) stops will have the same styles so here we use them together to not repeat it later. We move the element to the left.*/
+    }
+    25%{
+        transform: scale(.3); /*On this stop we scale the element down to make it look smaller.*/
+    }
+    50%{
+        left: 0; /*On this stop the left position to 0 to bring it all the way back..*/
+    }
+    75%{
+        transform: scale(1); /*On this stop we make the element the normal size again.*/
+    }
+}
